@@ -30,7 +30,7 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-# If an output directory is specified, use it; otherwise, use the script_dir.
+#Check if ouput directory is specified. Otherwise use default.
 if [ -n "$output_dir" ]; then
   #script_dir="$output_dir"
   output="$output_dir/output.tsv"
@@ -85,7 +85,7 @@ if [ -n "$interface" ]; then
       ip_array+=("$ip_octet1.$ip_octet2.$ip_octet3.$ip_octet4")
     done
 
-    #Ping each IP address in background. Number of "threads"
+    #Ping each IP address in background, and maintain number of subprocesses via "count"
     count=0
     > $script_dir/tmp.txt
     for ip in "${ip_array[@]}"; do
