@@ -61,7 +61,7 @@ if [ -n "$interface" ]; then
     #Read IP & Subnet
     ipv4=$(ipconfig getifaddr $interface)
     subnet=$(ipconfig getsummary $interface | awk '/subnet_mask/ {print $3}')
-    subnet_cidr=$(echo $subnet | awk -F'.' '{for(i=1;i<=NF;i++) s+=8-length($i); print s}')
+    subnet_cidr=$(echo $subnet | awk -F. '{for(i=1;i<=NF;i++) s += 8 - log(2**8 - $i)/log(2); print s}')
 
     # Extract octets via input field separator (IFS) and construct network range via bitwise 'AND' & 'OR' with binary inverse of subnet mask. 
     IFS=. read -r i1 i2 i3 i4 <<< "$ipv4"
